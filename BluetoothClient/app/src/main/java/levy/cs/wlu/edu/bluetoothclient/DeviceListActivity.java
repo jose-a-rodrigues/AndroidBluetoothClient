@@ -13,8 +13,10 @@ package levy.cs.wlu.edu.bluetoothclient;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -65,7 +67,9 @@ public class DeviceListActivity extends AppCompatActivity {
         {
             for(BluetoothDevice bt : mPairedDevices)
             {
-                list.add(bt.getName() + "\n" + bt.getAddress());
+                ParcelUuid[] guids = bt.getUuids();
+                list.add("Name: " + bt.getName() + "\nAddress: " + bt.getAddress() + "\nBTClass: " + bt.getBluetoothClass() + "\nUuid: " + bt.getUuids()[0]);
+                Log.d("BTDEVICE", "Device Name: " + bt.getName() + ", Address: " + bt.getAddress() + ", BTClass: " + bt.getBluetoothClass() + ", Uuid: " + bt.getUuids()[0]);
             }
         }
         else
@@ -75,7 +79,7 @@ public class DeviceListActivity extends AppCompatActivity {
 
         final ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
         mDeviceList.setAdapter(adapter);
-        mDeviceList.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
+       // mDeviceList.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
 
     }
 
